@@ -1,4 +1,6 @@
 data
+tasks
+!tasks/example.py
 __pycache__/
 *.py[cod]
 *.log

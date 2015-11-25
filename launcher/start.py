@@ -3,6 +3,7 @@ import os, sys
 import time
 import imp
 import threading
+import ctypes
 import config
 import xlog
 
@@ -10,6 +11,9 @@ data_path = config.data_path
 tasks_path = config.tasks_path
 
 def init():
+    if len(sys.argv) >= 2 and sys.argv[1] == '--noconsole':
+        if sys.platform.startswith("win"):
+            ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
     if not os.path.isdir(data_path):
         os.mkdir(data_path)
 

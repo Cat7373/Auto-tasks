@@ -36,7 +36,7 @@ def load_tasks():
                     tasks.append(task)
                     intervals.append(interval)
 
-                    xlog.info('load task %s done.' % name)
+                    xlog.info('load task %s success.' % name)
             except:
                 xlog.warn('load %s fail.' % fileName)
     del imp

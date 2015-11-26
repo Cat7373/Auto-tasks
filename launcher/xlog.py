@@ -1,6 +1,5 @@
 # coding:utf-8
-import os
-import sys
+import os, sys
 import time
 import traceback
 import config

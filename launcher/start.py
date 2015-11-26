@@ -1,20 +1,17 @@
 # coding:utf-8
 import os, sys
 import time
-import imp
 import threading
 import config
 import xlog
 
-data_path = config.data_path
-tasks_path = config.tasks_path
-
 def init():
-    if len(sys.argv) >= 2 and sys.argv[1] == '--noconsole':
-        if sys.platform.startswith("win"):
-            import ctypes
-            ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
-            del ctypes
+    if config.no_console and os.name == 'nt':
+        import ctypes
+        ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+        del ctypes
+
+    data_path = config.data_path
     if not os.path.isdir(data_path):
         os.mkdir(data_path)
 
@@ -22,6 +19,8 @@ def load_tasks():
     tasks = []
     intervals = []
 
+    import imp
+    tasks_path = config.tasks_path
     for fileName in os.listdir(tasks_path):
         if fileName.lower().endswith('.py'):
             xlog.info('start load %s' % fileName)
@@ -40,6 +39,7 @@ def load_tasks():
                     xlog.info('load task %s done.' % name)
             except:
                 xlog.warn('load %s fail.' % fileName)
+    del imp
 
     return (tasks, intervals)
 

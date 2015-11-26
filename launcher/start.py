@@ -3,7 +3,6 @@ import os, sys
 import time
 import imp
 import threading
-import ctypes
 import config
 import xlog
 
@@ -13,7 +12,9 @@ tasks_path = config.tasks_path
 def init():
     if len(sys.argv) >= 2 and sys.argv[1] == '--noconsole':
         if sys.platform.startswith("win"):
+            import ctypes
             ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+            del ctypes
     if not os.path.isdir(data_path):
         os.mkdir(data_path)
 
@@ -26,7 +27,7 @@ def load_tasks():
             xlog.info('start load %s' % fileName)
             try:
                 with open(os.path.join(tasks_path, fileName), 'rb') as fpy:
-                    task = imp.load_source(fileName, tasks_path, fpy)
+                    task = imp.load_source('Auto-tasks_%d_%s' % (len(tasks), fileName), tasks_path, fpy)
 
                     name = task.name
                     interval = task.run_interval

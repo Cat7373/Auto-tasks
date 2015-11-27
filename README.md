@@ -15,5 +15,6 @@
 
 # 目录说明:
 * launcher 程序核心
-* tasks 要运行的task文件
+* tasks 要运行的 task 文件
 * data 默认数据文件存放地址
+* _tasks 一些 task 脚本分享(里面的东西不会运行)
